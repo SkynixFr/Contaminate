@@ -83,12 +83,12 @@ export default {
         color: white;
     }
     .login-container{
-        background-color: #2E7D32;
+        background-color: #1B5E20;
     }
     .heading-form {
         text-align: center;
         font-size: 1.5em;
-        color: #2E7D32;
+        color: #1B5E20;
     }
     .text-footing-form{
         color: #4a5568;
