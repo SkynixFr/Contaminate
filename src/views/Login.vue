@@ -46,7 +46,7 @@
                               </v-btn>
                           </v-col>                     
                           <v-col cols="12">
-                              <div class="text-center"><span class="text-footing-form">Nouveau sur Contaminate ? </span><router-link to="/register" class="text-link-register">Inscrit-toi</router-link></div>
+                              <div class="text-center"><span class="text-footing-form">Nouveau sur Contaminate ? </span><router-link to="/register" class="text-link-register">Inscris-toi</router-link></div>
                           </v-col>
                       </v-row>
                   </v-container>
