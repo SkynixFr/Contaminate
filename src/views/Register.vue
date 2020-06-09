@@ -34,7 +34,7 @@
                                 prepend-inner-icon="mdi-email"
                                 label="E-mail"
                                 placeholder="Email"
-                                :rules="[rules.emailR , rules.required]"
+                                :rules="[rules.required]"
                                 v-model="email"
                               ></v-text-field>
                           </v-col>
@@ -59,19 +59,24 @@
                                 prepend-inner-icon="mdi-lock"
                                 label="Mot de passe"
                                 placeholder="Mot de passe"
-                                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                @click:append="showPassword = !showPassword"
-                                :type="showPassword ? 'text' : 'password'"
+                                :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
+                                @click:append="showPassword2 = !showPassword2"
+                                :type="showPassword2 ? 'text' : 'password'"
                                 :rules="[rules.required, rules.minPassword]"
-                                v-model="password"
+                                v-model="password2"
                               ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="8" offset="2">
-                              <v-btn block color="#2E7D32" dark large depressed>
+                              <v-alert type="error" :value="showError" transition="scale-transition">
+                                  {{ error }}
+                              </v-alert>
+                          </v-col>
+                          <v-col cols="12" sm="8" offset="2">
+                              <v-btn block color="#2E7D32" dark large depressed @click="register">
                                   Créer son compte
                               </v-btn>
                           </v-col>
-                          <v-col cols="12" sm="6" offset="3">
+                          <v-col cols="12" sm="8" offset="2">
                               <span class="text-footing-form">Déjà un compte sur Contaminate ? </span><router-link to="/login" class="text-link-login">Connecte toi !</router-link>
                           </v-col>
                       </v-row>
@@ -84,6 +89,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     name:"Register",
     data() {
@@ -92,14 +98,43 @@ export default {
                 required: value => !!value || "Ce champs est requis",
                 minPassword: value => value.length >= 6,
                 minUsername: value => value.length >= 3,
-                emailR : value  => /.+@.+/.test(value) || "E-mail must be valid",
-            
-      },
-            showError: false,
+            },
             showPassword: false,
+            showPassword2: false,
             password: "",
+            password2: "",
             username: "",
-            email:""
+            email:"",
+            showError: false,
+            error: "",
+            disabled: true
+        }
+    },
+    methods: {
+        setError(message){
+            this.error = message;
+            this.showError = true;
+            setTimeout(() => {
+                this.error = "";
+                this.showError = false;
+            }, 1500)
+        },
+        register() {
+            if(this.username.length<3 || this.email.length<1 || this.password.length<6) return this.setError("Attention il y a des données manquantes.")
+            if(this.password != this.password2) return this.setError("Les deux mots de passe ne sont pas identique");
+            let parameters = {
+                email: this.email,
+                username: this.username,
+                password: this.password
+            };
+            console.log(parameters);
+            
+            axios.post("https://contaminateapi.herokuapp.com/auth/register", parameters).then(response => {
+                console.log("Création réussi");
+            }).catch(error => {
+                console.log(error);
+                //this.setError(error);
+            })
         }
     }
 }
