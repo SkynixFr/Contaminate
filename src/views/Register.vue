@@ -72,7 +72,7 @@
                               </v-btn>
                           </v-col>
                           <v-col cols="12">
-                              <div class="text-center"><span class="text-footing-form">Déjà un compte sur Contaminate ? </span><router-link to="/login" class="text-link-login">Connecte toi !</router-link></div>
+                              <div class="text-center"><span class="text-footing-form">Déjà un compte sur Contaminate ? </span><router-link to="/login" class="text-link-login">Connecte-toi !</router-link></div>
                           </v-col>
                       </v-row>
                   </v-container>
