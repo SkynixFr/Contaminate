@@ -71,8 +71,8 @@
                                   Créer son compte
                               </v-btn>
                           </v-col>
-                          <v-col cols="12" sm="8" offset-sm="2" md="8" offset-md="2">
-                              <span class="text-footing-form">Déjà un compte sur Contaminate ? </span><router-link to="/login" class="text-link-login">Connecte toi !</router-link>
+                          <v-col cols="12">
+                              <div class="text-center"><span class="text-footing-form">Déjà un compte sur Contaminate ? </span><router-link to="/login" class="text-link-login">Connecte toi !</router-link></div>
                           </v-col>
                       </v-row>
                   </v-container>

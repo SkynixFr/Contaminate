@@ -44,9 +44,9 @@
                               <v-btn block color="#2E7D32" dark large depressed>
                                   Se connecter
                               </v-btn>
-                          </v-col>
-                          <v-col cols="12" sm="6" offset="3">
-                              <span class="text-footing-form">Nouveau sur Contaminate ? </span><router-link to="/register" class="text-link-register">Inscrit-toi</router-link>
+                          </v-col>                     
+                          <v-col cols="12">
+                              <div class="text-center"><span class="text-footing-form">Nouveau sur Contaminate ? </span><router-link to="/register" class="text-link-register">Inscrit-toi</router-link></div>
                           </v-col>
                       </v-row>
                   </v-container>
