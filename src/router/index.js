@@ -1,39 +1,42 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import store from '../store'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import store from "../store";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-  const routes = [
+const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: "/",
+    name: "Home",
     component: () => import("@/views/Home.vue"),
     beforeEnter(to, from, next) {
-      if(store.state.isConnected) return next(); else next("/login");
-    }
+      if (store.state.isConnected) return next();
+      else next("/login");
+    },
   },
   {
-    path: '/login',
-    name: 'Login',
+    path: "/login",
+    name: "Login",
     component: () => import("@/views/Login.vue"),
     beforeRouteEnter(to, from, next) {
-      if(store.state.isConnected) return next("/"); else next();
-    }
+      if (store.state.isConnected) return next("/");
+      else next("/login");
+    },
   },
   {
-    path: '/register',
-    name: 'Register',
+    path: "/register",
+    name: "Register",
     component: () => import("@/views/Register.vue"),
     beforeRouteEnter(to, from, next) {
-      if(store.state.isConnected) return next("/"); else next("/register");
-    }
-  }
-]
+      if (store.state.isConnected) return next("/");
+      else next("/register");
+    },
+  },
+];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
