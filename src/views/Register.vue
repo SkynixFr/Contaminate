@@ -1,20 +1,20 @@
 <template>
    <v-container fill-height fluid class="register-container">
       <v-row>
-          <v-col cols="12" sm="8" offset="2">
+          <v-col cols="12" sm="8" offset-sm="2" md="6" offset-md="3">
               <p style="text-align: center">Ici image</p>
           </v-col>
-          <v-col cols="12" sm="8" offset="2">
+          <v-col cols="12" sm="8" offset-sm="2" md="6" offset-md="3">
               <p class="heading-register">Contaminate</p>
           </v-col>
-          <v-col cols="12" sm="6" offset="3">
+          <v-col cols="12" sm="6" offset-sm="3" md="8" offset-md="2">
               <v-card outlined>
                   <v-container>
                       <v-row>
                           <v-col cols="12" sm="12">
                               <p class="heading-form">Créer ton compte !</p>
                           </v-col>
-                          <v-col cols="12" sm="8" offset="2">
+                          <v-col cols="12" sm="8" offset-sm="2" md="10" offset-md="1">
                               <v-text-field
                                 outlined
                                 clearable
@@ -26,7 +26,7 @@
                                 v-model="username"
                               ></v-text-field>
                           </v-col>
-                            <v-col cols="12" sm="8" offset="2">
+                            <v-col cols="12" sm="8" offset-sm="2" md="10" offset-md="1">
                               <v-text-field
                                 outlined
                                 clearable
@@ -38,7 +38,7 @@
                                 v-model="email"
                               ></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="8" offset="2">
+                          <v-col cols="12" sm="8" offset-sm="2" md="10" offset-md="1">
                               <v-text-field
                                 outlined
                                 color="#2E7D32"
@@ -52,12 +52,12 @@
                                 v-model="password"
                               ></v-text-field>
                           </v-col>
-                            <v-col cols="12" sm="8" offset="2">
+                            <v-col cols="12" sm="8" offset-sm="2" md="10" offset-md="1">
                               <v-text-field
                                 outlined
                                 color="#2E7D32"
                                 prepend-inner-icon="mdi-lock"
-                                label="Mot de passe"
+                                label="Verification du mot de passe"
                                 placeholder="Mot de passe"
                                 :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
                                 @click:append="showPassword2 = !showPassword2"
@@ -66,17 +66,12 @@
                                 v-model="password2"
                               ></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="8" offset="2">
-                              <v-alert type="error" :value="showError" transition="scale-transition">
-                                  {{ error }}
-                              </v-alert>
-                          </v-col>
-                          <v-col cols="12" sm="8" offset="2">
+                          <v-col cols="12" sm="8" offset-sm="2" md="10" offset-md="1">
                               <v-btn block color="#2E7D32" dark large depressed @click="register">
                                   Créer son compte
                               </v-btn>
                           </v-col>
-                          <v-col cols="12" sm="8" offset="2">
+                          <v-col cols="12" sm="8" offset-sm="2" md="8" offset-md="2">
                               <span class="text-footing-form">Déjà un compte sur Contaminate ? </span><router-link to="/login" class="text-link-login">Connecte toi !</router-link>
                           </v-col>
                       </v-row>
@@ -84,6 +79,10 @@
               </v-card>
           </v-col>
       </v-row>
+        <v-snackbar v-model="showMessage" :timeout="5000" color="red darken-2">
+            <span class="message-error">{{ message }}</span>
+            <v-btn icon @click="showMessage=false"><v-icon color="white">mdi-close</v-icon></v-btn>
+        </v-snackbar>
   </v-container>
 
 </template>
@@ -105,35 +104,27 @@ export default {
             password2: "",
             username: "",
             email:"",
-            showError: false,
-            error: "",
-            disabled: true
+            message: "",
+            showMessage: false
         }
     },
     methods: {
-        setError(message){
-            this.error = message;
-            this.showError = true;
-            setTimeout(() => {
-                this.error = "";
-                this.showError = false;
-            }, 1500)
+        setMessage(message){
+            this.message = message;
+            this.showMessage = !this.showMessage;
         },
         register() {
-            if(this.username.length<3 || this.email.length<1 || this.password.length<6) return this.setError("Attention il y a des données manquantes.")
-            if(this.password != this.password2) return this.setError("Les deux mots de passe ne sont pas identique");
+            if(this.username.length<3 || this.email.length<1 || this.password.length<6) return this.setMessage("Attention il y a des données manquantes.")
+            if(this.password != this.password2) return this.setMessage("Les deux mots de passe ne sont pas identique");
             let parameters = {
                 email: this.email,
                 username: this.username,
                 password: this.password
             };
-            console.log(parameters);
-            
             axios.post("https://contaminateapi.herokuapp.com/auth/register", parameters).then(response => {
-                console.log("Création réussi");
+                this.setMessage("Création réussi !")
             }).catch(error => {
-                console.log(error);
-                //this.setError(error);
+                this.setMessage(error.response.data.message);
             })
         }
     }
@@ -163,5 +154,8 @@ export default {
     .text-link-login{
         color: #2E7D32;
     }
-
+    .message-error{
+        color: white;
+        text-align: center;
+    }
 </style>
