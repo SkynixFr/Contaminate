@@ -18,9 +18,10 @@ const routes = [
   {
     path: "/login",
     name: "Login",
+    props: true,
     component: () => import("@/views/Login.vue"),
     beforeRouteEnter(to, from, next) {
-      if (store.state.isConnected) return next("/");
+      if (store.state.memberToken != "") return next("/");
       else next("/login");
     },
   },
@@ -29,7 +30,7 @@ const routes = [
     name: "Register",
     component: () => import("@/views/Register.vue"),
     beforeRouteEnter(to, from, next) {
-      if (store.state.isConnected) return next("/");
+      if (store.state.memberToken != "") return next("/");
       else next("/register");
     },
   },

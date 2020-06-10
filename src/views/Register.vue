@@ -148,9 +148,13 @@ export default {
       axios
         .post("https://contaminateapi.herokuapp.com/auth/register", parameters)
         .then((response) => {
-          this.$router.push("login");
+          this.$router.push({
+            name: "Login",
+            params: { messageRegister: response.data.message },
+          });
         })
         .catch((error) => {
+          console.log(error.response);
           this.setMessage(error.response.data.message);
         });
     },

@@ -14,6 +14,11 @@
               <v-col cols="12" sm="12">
                 <p class="heading-form">Connecte toi !</p>
               </v-col>
+              <v-col cols="12">
+                <v-alert type="info" v-show="messageResponse" dismissible>
+                  {{ messageRegister }} !
+                </v-alert>
+              </v-col>
               <v-col cols="12" sm="8" offset-sm="2" md="10" offset-md="1">
                 <v-text-field
                   outlined
@@ -67,7 +72,7 @@
       </v-col>
     </v-row>
     <v-snackbar v-model="showMessage" :timeout="5000" color="red darken-2">
-      <span class="message-error">{{ message }}</span>
+      <span>{{ message }}</span>
       <v-btn icon @click="showMessage = false"
         ><v-icon color="white">mdi-close</v-icon></v-btn
       >
@@ -79,6 +84,11 @@
 import axios from "axios";
 export default {
   name: "Login",
+  props: {
+    messageRegister: {
+      type: String,
+    },
+  },
   data() {
     return {
       rules: {
@@ -92,6 +102,7 @@ export default {
       username: "",
       message: "",
       showMessage: false,
+      messageResponse: false,
     };
   },
   methods: {
@@ -109,8 +120,6 @@ export default {
       axios
         .post("https://contaminateapi.herokuapp.com/auth/login", parameters)
         .then((response) => {
-          console.log("Login réussi");
-          console.log(response.data);
           this.$store.commit("login", response.data);
           this.$router.push("/");
         })
@@ -118,6 +127,14 @@ export default {
           this.setMessage(error.response.data.message);
         });
     },
+  },
+  mounted() {
+    if (this.messageRegister) {
+      this.messageResponse = true;
+      setTimeout(() => {
+        this.messageResponse = false;
+      }, 5000);
+    }
   },
 };
 </script>
