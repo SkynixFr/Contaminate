@@ -1,20 +1,20 @@
 <template>
   <v-container fill-height fluid class="login-container">
     <v-row>
-      <v-col cols="12" sm="8" offset="2">
+      <v-col cols="12" sm="8" offset-sm="2" md="6" offset-md="3">
         <p style="text-align: center">Ici image</p>
       </v-col>
-      <v-col cols="12" sm="8" offset="2">
+      <v-col cols="12" sm="8" offset-sm="2" md="6" offset-md="3">
         <p class="heading-login">Contaminate</p>
       </v-col>
-      <v-col cols="12" sm="6" offset="3">
+      <v-col cols="12" sm="6" offset-sm="3" md="8" offset-md="2">
         <v-card outlined>
           <v-container>
             <v-row>
               <v-col cols="12" sm="12">
                 <p class="heading-form">Connecte toi !</p>
               </v-col>
-              <v-col cols="12" sm="8" offset="2">
+              <v-col cols="12" sm="8" offset-sm="2" md="10" offset-md="1">
                 <v-text-field
                   outlined
                   clearable
@@ -26,7 +26,7 @@
                   v-model="username"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="8" offset="2">
+              <v-col cols="12" sm="8" offset-sm="2" md="10" offset-md="1">
                 <v-text-field
                   outlined
                   color="#2E7D32"
@@ -40,7 +40,7 @@
                   v-model="password"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="8" offset="2">
+              <v-col cols="12" sm="8" offset-sm="2" md="10" offset-md="1">
                 <v-btn
                   block
                   color="#2E7D32"

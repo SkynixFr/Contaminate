@@ -34,7 +34,7 @@
                   prepend-inner-icon="mdi-email"
                   label="E-mail"
                   placeholder="Email"
-                  :rules="[rules.required]"
+                  :rules="[rules.required, rules.email]"
                   v-model="email"
                 ></v-text-field>
               </v-col>
@@ -83,7 +83,7 @@
                   <span class="text-footing-form"
                     >Déjà un compte sur Contaminate ? </span
                   ><router-link to="/login" class="text-link-login"
-                    >Connecte-toi !</router-link
+                    >Connecte-toi</router-link
                   >
                 </div>
               </v-col>
@@ -111,6 +111,10 @@ export default {
         required: (value) => !!value || "Ce champs est requis",
         minPassword: (value) => value.length >= 6,
         minUsername: (value) => value.length >= 3,
+        email: (value) => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "E-mail invalide";
+        },
       },
       showPassword: false,
       showPassword2: false,

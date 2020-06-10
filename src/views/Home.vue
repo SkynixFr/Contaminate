@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     {{ token }}
+    <v-btn @click="logout">Deconnexion</v-btn>
   </div>
 </template>
 
@@ -26,6 +27,10 @@ export default {
         .catch((error) => {
           console.log(error.response);
         });
+    },
+    logout() {
+      this.$store.commit("logout");
+      this.$router.push("/login");
     },
   },
   mounted() {

@@ -20,6 +20,10 @@ export default new Vuex.Store({
       state.isConnected = true;
       state.memberToken = data.token;
     },
+    logout(state) {
+      state.isConnected = false;
+      state.memberToken = "";
+    },
   },
   actions: {},
   modules: {},
