@@ -11,7 +11,7 @@ const routes = [
     name: "Home",
     component: () => import("@/views/Home.vue"),
     beforeEnter(to, from, next) {
-      if (store.state.isConnected) return next();
+      if (store.state.memberToken) return next();
       else next("/login");
     },
   },
