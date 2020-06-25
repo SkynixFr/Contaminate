@@ -12,14 +12,11 @@ const vp = new VuexPersist({
 export default new Vuex.Store({
   plugins: [vp.plugin],
   state: {
-    memberToken: "",
+    authToken: "",
   },
   mutations: {
     login(state, data) {
-      state.memberToken = data.token;
-    },
-    logout(state) {
-      state.memberToken = "";
+      state.authToken = data.token;
     },
   },
   actions: {},

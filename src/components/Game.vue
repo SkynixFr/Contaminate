@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       gold: 0,
-      goldpersecond: 1,
+      goldpersecond: 0,
     };
   },
   methods: {
