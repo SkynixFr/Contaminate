@@ -6,9 +6,9 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: () => import("@/views/Home.vue"),
+    path: "/game",
+    name: "Game",
+    component: () => import("@/views/Game.vue"),
     meta: { requiresAuth: true },
   },
   {
@@ -25,8 +25,9 @@ const routes = [
   {
     path: "/profil",
     name: "Profil",
-    component: () => import("@/views/Profil.vue")
-  }
+    component: () => import("@/views/Profil.vue"),
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = new VueRouter({

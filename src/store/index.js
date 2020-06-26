@@ -20,6 +20,10 @@ export default new Vuex.Store({
       state.authToken = data.token;
       state.userId = data.user;
     },
+    logout(state) {
+      state.authToken = "";
+      state.userId = "";
+    },
   },
   actions: {},
   modules: {},

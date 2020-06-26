@@ -112,7 +112,7 @@ export default {
           .then((response) => {
             this.$store.commit("login", response.data);
             this.$router.push({
-              name: "Home",
+              name: "Game",
             });
           })
           .catch((error) => {
