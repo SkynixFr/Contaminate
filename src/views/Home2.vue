@@ -39,9 +39,9 @@ export default {
   methods: {
     // test() {
     //   axios
-    //     .get("https://contaminateapi.herokuapp.com/users", {
+    //     .get("users/" , {
     //       headers: {
-    //         "auth-token": this.token,
+    //         "auth-token": this.$store.state.token,
     //       },
     //     })
     //     .then((response) => {

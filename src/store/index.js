@@ -13,11 +13,12 @@ export default new Vuex.Store({
   plugins: [vp.plugin],
   state: {
     authToken: "",
+    userId: "",
   },
   mutations: {
     login(state, data) {
       state.authToken = data.token;
-      
+      state.userId = data.user;
     },
   },
   actions: {},
