@@ -2,7 +2,7 @@
   <v-container fluid style="background-color:blue">
     <v-row>
       <v-col cols="12" md="3">
-        <span>Profile</span>
+        <span>Profil</span>
         <v-btn icon @click="logout">
           <v-icon color="red-darken-2">mdi-logout</v-icon>
         </v-btn>
