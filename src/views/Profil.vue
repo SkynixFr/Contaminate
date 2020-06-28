@@ -11,7 +11,7 @@
       </v-col>
       <v-col cols="12" md="6">
         <v-card color="rgba(255,255,255,1)">
-          <v-list-item nine-line>
+          <v-list-item x-line>
             <v-list-item-content>
               <v-list-item-title class="display-1 pt-1">
                 Général
@@ -25,7 +25,7 @@
               <v-list-item-title class="display-1 pt-7">
                 Statistique
                 </v-list-item-title>
-              <v-list-item-subtitle class=" pt-1">
+              <v-list-item-subtitle class=" pt-5">
                 Gold total :
               </v-list-item-subtitle>
               <v-list-item-subtitle class=" pt-1">
@@ -65,11 +65,14 @@
 </template>
 
 <script>
+
 export default {
+  
   name: "Profil",
   data() {
     return {
-      user:""
+      user:"",
+      username:"",
     };
   },
 
@@ -91,7 +94,7 @@ export default {
 
 <style>
 .display-1 {
-  
+
   border-bottom: solid white;
 }
 </style>

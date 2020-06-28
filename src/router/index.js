@@ -28,6 +28,13 @@ const routes = [
     component: () => import("@/views/Profil.vue"),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/ladder",
+    name: "Ladder",
+    component: () => import("@/views/Ladder.vue"),
+    meta: { requiresAuth: true },
+  },
+
 ];
 
 const router = new VueRouter({
