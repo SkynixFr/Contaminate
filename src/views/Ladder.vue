@@ -16,6 +16,10 @@
                 Ladder
 
                 </v-list-item-title>
+                <v-btn icon class="mr-1" v-bind="attrs" v-on="on"  @click="checkmyrank">
+                        
+                        Voir mon classement
+                </v-btn>
                     <v-col cols="12" md="3">
                         <v-list-item-title id="title" class="display-1 pt-1">
                                 #
@@ -107,6 +111,11 @@ export default {
     return {
 
     };
+  },
+    methods: {
+    checkmyrank() {
+
+    },
   },
 
 };
