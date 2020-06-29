@@ -1,7 +1,7 @@
 <template>
   <v-app id="container">
-    <NavBar v-if="this.$store.state.authToken" :username="username" />
     <v-main>
+      <NavBar v-if="this.$store.state.authToken" />
       <router-view></router-view>
     </v-main>
   </v-app>
@@ -13,25 +13,6 @@ export default {
   name: "App",
   components: {
     NavBar,
-  },
-  data() {
-    return {
-      username: "",
-    };
-  },
-  mounted() {
-    axios
-      .get("/users/" + this.$store.state.userId, {
-        headers: {
-          "auth-token": this.$store.state.authToken,
-        },
-      })
-      .then((response) => {
-        this.username = response.data.user.username;
-      })
-      .catch((error) => {
-        console.log(error.response.message);
-      });
   },
 };
 </script>

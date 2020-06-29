@@ -1,24 +1,21 @@
 <template>
   <div>
     <v-app-bar app fixed color="rgba(0,0,0,0.8)" dark>
-      <!-- <v-img src="../../public/icon.png" max-width="50"></v-img> -->
-      <v-toolbar-title class="pr-1">
-        <router-link to="/" exact class="link-home">
-          Bienvenue
-          <router-link to="/profil" exact>{{ username }}</router-link>
-          !</router-link
-        >
-      </v-toolbar-title>
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon class="mr-1" v-bind="attrs" v-on="on" @click="logout">
-            <v-icon>mdi-logout</v-icon>
-          </v-btn>
+          <v-img
+            src="../../public/icon.png"
+            max-width="50"
+            v-on:click="home"
+            class="mr-5"
+            v-bind="attrs"
+            v-on="on"
+          ></v-img>
         </template>
-        <span>Se déconnecter</span>
+        <span>Revenir sur le jeu</span>
       </v-tooltip>
       <v-toolbar-title class="hidden-sm-and-down">
-        Liste des bonus achetés :
+        Bonus achetés :
       </v-toolbar-title>
       <v-col cols="12" md="6" class="hidden-sm-and-down">
         <v-chip-group>
@@ -123,9 +120,21 @@
         </v-chip-group>
       </v-col>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="pr-1 hidden-sm-and-down">
-        {{ username }} ???/???
-      </v-toolbar-title>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-toolbar-title
+            class="pr-2 hidden-sm-and-down"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <router-link to="/profil" exact>
+              {{ username }}
+            </router-link>
+          </v-toolbar-title>
+        </template>
+        <span>Profil</span>
+      </v-tooltip>
+      <v-toolbar-title class="pr-2 hidden-sm-and-down">???/???</v-toolbar-title>
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -149,8 +158,13 @@
     <v-navigation-drawer v-model="drawer" fixed temporary dark>
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title>Contaminate</v-list-item-title>
-          <v-list-item-subtitle> {{ username }} </v-list-item-subtitle>
+          <v-list-item-avatar :size="60" class="mb-2" rounded>
+            <v-img
+              src="../../public/icon.png"
+              max-width="75"
+              max-height="75"
+            ></v-img>
+          </v-list-item-avatar>
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
@@ -179,7 +193,7 @@
             <v-list-item-title>{{ username }} ???/???</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-expansion-panels flat accordion>
+        <v-expansion-panels flat accordion dark>
           <v-expansion-panel>
             <v-expansion-panel-header expand-icon="mdi-menu-down">
               Liste des bonus achetés
@@ -308,26 +322,41 @@ export default {
   data() {
     return {
       drawer: null,
+      username: "",
     };
   },
-  props: {
-    username: {
-      type: String,
-      require: true,
-    },
-  },
+
   methods: {
+    home() {
+      this.$router.push({
+        path: "/",
+        name: "Game",
+      });
+    },
     logout() {
       this.$store.commit("logout");
       this.$router.push("/login");
     },
   },
+  mounted() {
+    axios
+      .get("/users/" + this.$store.state.userId, {
+        headers: {
+          "auth-token": this.$store.state.authToken,
+        },
+      })
+      .then((response) => {
+        this.username = response.data.user.username;
+      })
+      .catch((error) => {
+        console.log(error.response.message);
+      });
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.link-home {
-  text-decoration: none;
-  color: white;
+.text-game {
+  color: #004d40;
 }
 </style>
