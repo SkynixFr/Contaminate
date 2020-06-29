@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/game",
+    path: "/",
     name: "Game",
     component: () => import("@/views/Game.vue"),
     meta: { requiresAuth: true },
@@ -34,7 +34,6 @@ const routes = [
     component: () => import("@/views/Ladder.vue"),
     meta: { requiresAuth: true },
   },
-
 ];
 
 const router = new VueRouter({

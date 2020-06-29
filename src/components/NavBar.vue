@@ -1,13 +1,17 @@
 <template>
   <div>
     <v-app-bar app fixed color="rgba(0,0,0,0.8)" dark>
+      <!-- <v-img src="../../public/icon.png" max-width="50"></v-img> -->
       <v-toolbar-title class="pr-1">
-        Bienvenue
-        <router-link to="/profil">{{ username }}</router-link> !
+        <router-link to="/" exact class="link-home">
+          Bienvenue
+          <router-link to="/profil" exact>{{ username }}</router-link>
+          !</router-link
+        >
       </v-toolbar-title>
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon class="mr-1 " v-bind="attrs" v-on="on" @click="logout">
+          <v-btn icon class="mr-1" v-bind="attrs" v-on="on" @click="logout">
             <v-icon>mdi-logout</v-icon>
           </v-btn>
         </template>
@@ -16,7 +20,7 @@
       <v-toolbar-title class="hidden-sm-and-down">
         Liste des bonus achetés :
       </v-toolbar-title>
-      <v-col cols="12" md="5" class="hidden-sm-and-down">
+      <v-col cols="12" md="6" class="hidden-sm-and-down">
         <v-chip-group>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -124,7 +128,14 @@
       </v-toolbar-title>
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on" class="hidden-sm-and-down">
+          <v-btn
+            icon
+            v-bind="attrs"
+            v-on="on"
+            class="hidden-sm-and-down"
+            to="/ladder"
+            exact
+          >
             <v-icon>mdi-podium</v-icon>
           </v-btn>
         </template>
@@ -135,7 +146,7 @@
         class="hidden-md-and-up"
       ></v-app-bar-nav-icon>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" fixed temporary>
+    <v-navigation-drawer v-model="drawer" fixed temporary dark>
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title>Contaminate</v-list-item-title>
@@ -144,7 +155,7 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list>
-        <v-list-item link to="/game">
+        <v-list-item link to="/" exact>
           <v-list-item-icon>
             <v-icon>mdi-nintendo-game-boy</v-icon>
           </v-list-item-icon>
@@ -152,7 +163,7 @@
             <v-list-item-title>Jeu</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/game">
+        <v-list-item link to="/profil" exact>
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
@@ -160,7 +171,7 @@
             <v-list-item-title>Profil</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/game">
+        <v-list-item link to="/ladder" exact>
           <v-list-item-icon>
             <v-icon>mdi-podium</v-icon>
           </v-list-item-icon>
@@ -285,9 +296,6 @@
           <v-btn icon @click="logout">
             <v-icon>mdi-logout</v-icon>
           </v-btn>
-          <v-btn icon>
-            <v-icon>mdi-brightness-4</v-icon>
-          </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
@@ -317,4 +325,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.link-home {
+  text-decoration: none;
+  color: white;
+}
+</style>

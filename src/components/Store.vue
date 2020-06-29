@@ -1,5 +1,5 @@
 <template>
-  <span>Classement</span>
+  <h1>Boutique</h1>
 </template>
 
 <script>
