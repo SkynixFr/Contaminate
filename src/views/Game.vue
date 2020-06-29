@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12">
-        
+        <NavBar :username="username" />
       </v-col>
     </v-row>
   </v-container>

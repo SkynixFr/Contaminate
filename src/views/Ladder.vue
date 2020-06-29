@@ -1,12 +1,7 @@
 <template>
   <v-container fluid style="">
     <v-row>
-      <v-col cols="12" md="12">
-        <span>Se déconnecter</span>
-        <v-btn icon>
-          <v-icon color="red-darken-2">mdi-logout</v-icon>
-        </v-btn>
-      </v-col>
+
     
       <v-col cols="12" md="12">
         <v-card class="ladder">
@@ -16,7 +11,7 @@
                 Ladder
 
                 </v-list-item-title>
-                <v-btn icon class="mr-1" v-bind="attrs" v-on="on"  @click="checkmyrank">
+                <v-btn icon class="mr-1"  @click="getmyprofil">
                         
                         Voir mon classement
                 </v-btn>
@@ -109,13 +104,26 @@ export default {
   name: "Ladder",
   data() {
     return {
-
+            username:"",
     };
   },
     methods: {
-    checkmyrank() {
-
+    getmyprofil() {
+         axios
+        .get("/users/" + this.$store.state.userId, {
+                        headers: {
+                        "auth-token": this.$store.state.token,
+                        },
+        })
+        .then((response) => {
+                        
+        this.username = response.data.user.username
+        console.log(this.username)
+        });
+        },
     },
+  mounted() {
+    this.getmyprofil();
   },
 
 };
@@ -146,9 +154,6 @@ text-align: center;
 .ladder {
 
 
-  background: url('https://media.giphy.com/media/U7bVNuSocZEWqx4qsX/giphy.gif') center;
-    background-size:cover;
-    background-position:inherit;
 }
 
 </style>
