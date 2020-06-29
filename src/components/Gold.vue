@@ -9,6 +9,18 @@
         <v-card-subtitle class="text-center">
           <span class="ml-2 gold-second">(0 or/s.)</span>
         </v-card-subtitle>
+        <v-card-title class="justify-center green-number">
+          {{ formatedTwitchPts }}
+          <v-img
+            src="../../public/icon.png"
+            class="ml-1"
+            max-width="30"
+          ></v-img>
+        </v-card-title>
+        <v-card-subtitle class="text-center">
+          <span class="ml-2 ">(Prochainement...)</span>
+        </v-card-subtitle>
+
         <v-card-actions>
           <v-img
             src="../../public/twitch.png"
@@ -23,21 +35,56 @@
 </template>
 
 <script>
+import { bus } from "../main";
 export default {
   data() {
     return {
-      golds: 77882,
+      golds: 0,
+      twitchPts: 0,
     };
+  },
+  props: {
+    game: {
+      require: true,
+    },
   },
   methods: {
     test() {
-      this.golds++;
+      this.game.golds++;
+    },
+    updateGame() {
+      let parameters = {
+        golds: this.golds,
+        twitchPts: this.twitchPts,
+      };
+      axios
+        .patch("/games/" + this.game._id, parameters, {
+          headers: {
+            "auth-token": this.$store.state.authToken,
+          },
+        })
+        .then((response) => {
+          bus.$emit("updateGame", response.data.message);
+        })
+        .catch((error) => {
+          console.log(error.response.message);
+        });
     },
   },
   computed: {
     formatedGold: function() {
-      return new Intl.NumberFormat().format(this.golds);
+      return (this.golds = new Intl.NumberFormat().format(this.game.golds));
     },
+    formatedTwitchPts: function() {
+      return (this.twitchPts = new Intl.NumberFormat().format(
+        this.game.twitchPts
+      ));
+    },
+  },
+  mounted() {
+    setInterval(() => {
+      this.updateGame();
+    }, 300000);
   },
 };
 </script>
@@ -48,6 +95,11 @@ export default {
   font-family: "MuseoModerno", cursive;
   font-weight: bold;
   color: #ffd700;
+}
+.green-number {
+  font-size: 2em;
+  font-family: "MuseoModerno", cursive;
+  font-weight: bold;
 }
 .gold-second {
   color: #ffd700;

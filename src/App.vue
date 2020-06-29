@@ -20,6 +20,7 @@ export default {
 <style lang="scss" scoped>
 #container {
   background-image: url("../public/large-twitch.jpg");
+  background-color: rgba(0, 0, 0, 0.9);
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -27,7 +28,7 @@ export default {
 }
 @media (max-width: 767px) {
   #container {
-    background-image: url("../public/small-twitch.jpg");
+    background-image: url("../public/medium-twitch.jpg");
   }
 }
 @media (max-width: 1920px) and (min-width: 768px) {

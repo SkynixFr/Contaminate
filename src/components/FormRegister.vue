@@ -131,6 +131,7 @@ export default {
           .then((response) => {
             this.$router.push({
               name: "Login",
+              path: "/login",
               params: {
                 responseRegister: response.data.message,
               },

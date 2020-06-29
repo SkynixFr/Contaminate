@@ -7,11 +7,11 @@
       color="#004D40"
       elevation="2"
       multi-line
-      transition="scroll-y-transition"
+      transition="slide-y-transition"
       :value="showSuccess"
     >
       <v-icon>mdi-check-circle</v-icon>
-      <span class="success-text">{{ responseRegister }} !</span>
+      <span class="ml-2">{{ responseRegister }} !</span>
     </v-snackbar>
     <v-toolbar flat color="#004D40" dark>
       <v-spacer></v-spacer>
@@ -136,9 +136,6 @@ export default {
 };
 </script>
 <style lang="scss">
-.success-text {
-  margin-left: 15px;
-}
 .footing-text {
   width: 100%;
   text-align: center;

@@ -8,6 +8,7 @@ const routes = [
   {
     path: "/",
     name: "Game",
+    props: true,
     component: () => import("@/views/Game.vue"),
     meta: { requiresAuth: true },
   },

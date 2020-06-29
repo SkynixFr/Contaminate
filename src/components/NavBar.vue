@@ -325,7 +325,6 @@ export default {
       username: "",
     };
   },
-
   methods: {
     home() {
       this.$router.push({

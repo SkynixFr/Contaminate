@@ -5,6 +5,8 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import axios from "axios";
 
+export const bus = new Vue();
+
 Vue.config.productionTip = false;
 
 window.axios = axios.create({
