@@ -37,12 +37,6 @@
 <script>
 import { bus } from "../main";
 export default {
-  data() {
-    return {
-      golds: 0,
-      twitchPts: 0,
-    };
-  },
   props: {
     game: {
       require: true,
@@ -54,31 +48,25 @@ export default {
     },
     updateGame() {
       let parameters = {
-        golds: this.golds,
-        twitchPts: this.twitchPts,
+        golds: this.game.golds,
+        twitchPts: this.game.twitchPts,
       };
       axios
-        .patch("/games/" + this.game._id, parameters, {
-          headers: {
-            "auth-token": this.$store.state.authToken,
-          },
-        })
+        .patch("/games/" + this.game._id, parameters)
         .then((response) => {
           bus.$emit("updateGame", response.data.message);
         })
         .catch((error) => {
-          console.log(error.response.message);
+          console.log(error.response.data);
         });
     },
   },
   computed: {
     formatedGold: function() {
-      return (this.golds = new Intl.NumberFormat().format(this.game.golds));
+      return new Intl.NumberFormat().format(this.game.golds);
     },
     formatedTwitchPts: function() {
-      return (this.twitchPts = new Intl.NumberFormat().format(
-        this.game.twitchPts
-      ));
+      return new Intl.NumberFormat().format(this.game.twitchPts);
     },
   },
   mounted() {

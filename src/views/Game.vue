@@ -38,16 +38,12 @@ export default {
   methods: {
     gameInfos() {
       axios
-        .post("/games", {
-          headers: {
-            "auth-token": this.$store.state.authToken,
-          },
-        })
+        .post("/games")
         .then((response) => {
           this.game = response.data.game;
         })
         .catch((error) => {
-          console.log(error.response.message);
+          console.log(error.response.data);
         });
     },
   },

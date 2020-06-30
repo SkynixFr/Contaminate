@@ -1,7 +1,6 @@
 <template>
   <v-card shaped elevation="12">
     <v-snackbar
-      centered
       top
       dark
       color="#004D40"

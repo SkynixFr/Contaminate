@@ -339,16 +339,12 @@ export default {
   },
   mounted() {
     axios
-      .get("/users/" + this.$store.state.userId, {
-        headers: {
-          "auth-token": this.$store.state.authToken,
-        },
-      })
+      .get("/users/" + this.$store.state.userId)
       .then((response) => {
         this.username = response.data.user.username;
       })
       .catch((error) => {
-        console.log(error.response.message);
+        console.log(error.response.data);
       });
   },
 };
