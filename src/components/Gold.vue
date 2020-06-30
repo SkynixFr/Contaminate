@@ -25,7 +25,7 @@
           <v-img
             src="../../public/twitch.png"
             max-width="250"
-            v-on:click="test"
+            v-on:click="addingGold"
           >
           </v-img>
         </v-card-actions>
@@ -43,8 +43,9 @@ export default {
     },
   },
   methods: {
-    test() {
+    addingGold() {
       this.game.golds++;
+      bus.$emit("addingGold", this.game.golds);
     },
     updateGame() {
       let parameters = {
@@ -70,6 +71,7 @@ export default {
     },
   },
   mounted() {
+    bus.$emit("addingGold", this.game.golds);
     setInterval(() => {
       this.updateGame();
     }, 300000);

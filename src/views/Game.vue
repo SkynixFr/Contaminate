@@ -41,6 +41,7 @@ export default {
         .post("/games")
         .then((response) => {
           this.game = response.data.game;
+          this.$store.commit("game", response.data.game._id);
         })
         .catch((error) => {
           console.log(error.response.data);

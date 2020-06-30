@@ -1,9 +1,24 @@
 <template>
-  <h1>Boutique</h1>
+  <v-container fluid>
+    <v-row justify="center" align="center">
+      <v-card outlined dark color="rgba(0,0,0,0.8)">
+        <v-card-title class="justify-center headline">Boutique</v-card-title>
+        <v-card-text>
+          <ListBonus />
+        </v-card-text>
+      </v-card>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-export default {};
+import ListBonus from "@/components/ListBonus.vue";
+export default {
+  name: "Store",
+  components: {
+    ListBonus,
+  },
+};
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

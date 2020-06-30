@@ -19,7 +19,11 @@
       </v-toolbar-title>
       <v-col cols="12" md="6" class="hidden-sm-and-down">
         <v-chip-group>
-          <v-tooltip bottom>
+          <v-tooltip
+            bottom
+            v-for="bonusBought in listBonusBought"
+            :key="bonusBought._id"
+          >
             <template v-slot:activator="{ on, attrs }">
               <v-chip
                 color="#004D40"
@@ -28,94 +32,10 @@
                 v-on="on"
                 dark
               >
-                dazdqsd
+                {{ bonusBought.name }}
               </v-chip>
             </template>
-            <span>Bonus n°1</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-chip
-                color="#004D40"
-                :ripple="false"
-                v-bind="attrs"
-                v-on="on"
-                dark
-              >
-                dazdqsd
-              </v-chip>
-            </template>
-            <span>Bonus n°2</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-chip
-                color="#004D40"
-                :ripple="false"
-                v-bind="attrs"
-                v-on="on"
-                dark
-              >
-                dazdqsd
-              </v-chip>
-            </template>
-            <span>Bonus n°3</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-chip
-                color="#004D40"
-                :ripple="false"
-                v-bind="attrs"
-                v-on="on"
-                dark
-              >
-                dazdqsd
-              </v-chip>
-            </template>
-            <span>Bonus n°4</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-chip
-                color="#004D40"
-                :ripple="false"
-                v-bind="attrs"
-                v-on="on"
-                dark
-              >
-                dazdqsd
-              </v-chip>
-            </template>
-            <span>Bonus n°5</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-chip
-                color="#004D40"
-                :ripple="false"
-                v-bind="attrs"
-                v-on="on"
-                dark
-              >
-                dazdqsd
-              </v-chip>
-            </template>
-            <span>Bonus n°6</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-chip
-                color="#004D40"
-                :ripple="false"
-                v-bind="attrs"
-                v-on="on"
-                dark
-              >
-                dazdqsd
-              </v-chip>
-            </template>
-            <span>Bonus n°7</span>
+            <span>{{ bonusBought.description }}</span>
           </v-tooltip>
         </v-chip-group>
       </v-col>
@@ -200,7 +120,11 @@
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-chip-group column>
-                <v-tooltip bottom>
+                <v-tooltip
+                  bottom
+                  v-for="bonusBought in listBonusBought"
+                  :key="bonusBought._id"
+                >
                   <template v-slot:activator="{ on, attrs }">
                     <v-chip
                       color="#004D40"
@@ -209,101 +133,16 @@
                       v-on="on"
                       dark
                     >
-                      dazdqsd
+                      {{ bonusBought.name }}
                     </v-chip>
                   </template>
-                  <span>Bonus n°1</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-chip
-                      color="#004D40"
-                      :ripple="false"
-                      v-bind="attrs"
-                      v-on="on"
-                      dark
-                    >
-                      dazdqsd
-                    </v-chip>
-                  </template>
-                  <span>Bonus n°2</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-chip
-                      color="#004D40"
-                      :ripple="false"
-                      v-bind="attrs"
-                      v-on="on"
-                      dark
-                    >
-                      dazdqsd
-                    </v-chip>
-                  </template>
-                  <span>Bonus n°3</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-chip
-                      color="#004D40"
-                      :ripple="false"
-                      v-bind="attrs"
-                      v-on="on"
-                      dark
-                    >
-                      dazdqsd
-                    </v-chip>
-                  </template>
-                  <span>Bonus n°4</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-chip
-                      color="#004D40"
-                      :ripple="false"
-                      v-bind="attrs"
-                      v-on="on"
-                      dark
-                    >
-                      dazdqsd
-                    </v-chip>
-                  </template>
-                  <span>Bonus n°5</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-chip
-                      color="#004D40"
-                      :ripple="false"
-                      v-bind="attrs"
-                      v-on="on"
-                      dark
-                    >
-                      dazdqsd
-                    </v-chip>
-                  </template>
-                  <span>Bonus n°6</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-chip
-                      color="#004D40"
-                      :ripple="false"
-                      v-bind="attrs"
-                      v-on="on"
-                      dark
-                    >
-                      dazdqsd
-                    </v-chip>
-                  </template>
-                  <span>Bonus n°7</span>
+                  <span>{{ bonusBought.description }}</span>
                 </v-tooltip>
               </v-chip-group>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
       </v-list>
-
       <template v-slot:append>
         <v-divider></v-divider>
         <div class="pa-2">
@@ -323,6 +162,7 @@ export default {
     return {
       drawer: null,
       username: "",
+      listBonusBought: "",
     };
   },
   methods: {
@@ -346,6 +186,9 @@ export default {
       .catch((error) => {
         console.log(error.response.data);
       });
+    axios.get("/bonus/" + this.$store.state.gameId).then((response) => {
+      this.listBonusBought = response.data.bonus;
+    });
   },
 };
 </script>

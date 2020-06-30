@@ -14,6 +14,7 @@ export default new Vuex.Store({
   state: {
     authToken: "",
     userId: "",
+    gameId: "",
   },
   mutations: {
     login(state, data) {
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     logout(state) {
       state.authToken = "";
       state.userId = "";
+    },
+    game(state, data) {
+      state.gameId = data;
     },
   },
   actions: {},
