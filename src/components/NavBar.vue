@@ -179,14 +179,14 @@ export default {
   },
   mounted() {
     axios
-      .get("/users/" + this.$store.state.userId)
+      .get("/users/" + this.$store.state.game.user)
       .then((response) => {
         this.username = response.data.user.username;
       })
       .catch((error) => {
         console.log(error.response.data);
       });
-    axios.get("/bonus/" + this.$store.state.gameId).then((response) => {
+    axios.get("/bonus/" + this.$store.state.game._id).then((response) => {
       this.listBonusBought = response.data.bonus;
     });
   },

@@ -1,47 +1,75 @@
 <template>
   <v-tooltip bottom color="rgba(0,0,0,0)">
     <template v-slot:activator="{ on, attrs }">
-      <v-chip v-bind="attrs" v-on="on" color="#004D40" :ripple="false" dark>
+      <v-chip
+        v-bind="attrs"
+        v-on="on"
+        color="#004D40"
+        :ripple="false"
+        dark
+        v-show="canBuySoon"
+        :disabled="canBuyNow"
+      >
         {{ bonus.name }}
-        {{ golds }}
       </v-chip>
     </template>
     <v-card color="rgba(0,0,0,1)">
       <v-card-title>{{ bonus.name }}</v-card-title>
       <v-card-text>{{ bonus.description }} </v-card-text>
       <v-card-actions>
-        <span> Prix: {{ formatedGold }} <v-icon small>mdi-gold</v-icon></span>
+        <span> Prix: {{ formatedBonusPrice }}</span>
       </v-card-actions>
     </v-card>
   </v-tooltip>
 </template>
 
 <script>
-import { bus } from "../main";
 export default {
   name: "Bonus",
-  data() {
-    return {
-      golds: 0,
-    };
-  },
   props: {
     bonus: {
       type: Object,
       require: true,
     },
   },
+  data() {
+    return {
+      goldsGame: Number,
+      canBuySoon: false,
+      canBuyNow: true,
+    };
+  },
   computed: {
-    formatedGold: function() {
+    formatedBonusPrice: function() {
       return new Intl.NumberFormat().format(this.bonus.price);
     },
+    getGoldsGame: function() {
+      return (this.goldsGame = this.$store.state.game.golds);
+    },
   },
-  created() {
-    bus.$on("addingGold", (data) => {
-      this.golds = data;
-    });
+  methods: {
+    getStartGoldsGame() {
+      this.goldsGame = this.$store.state.game.golds;
+    },
+  },
+  watch: {
+    getGoldsGame(newGolds, oldGolds) {
+      if (this.goldsGame >= this.bonus.price - this.bonus.price / 4) {
+        this.canBuySoon = true;
+        if (this.goldsGame >= this.bonus.price) {
+          this.canBuyNow = false;
+        }
+      }
+    },
+  },
+  mounted() {
+    this.getStartGoldsGame();
+    if (this.goldsGame >= this.bonus.price - this.bonus.price / 4) {
+      this.canBuySoon = true;
+      if (this.goldsGame >= this.bonus.price) {
+        this.canBuyNow = false;
+      }
+    }
   },
 };
 </script>
-
-<style></style>

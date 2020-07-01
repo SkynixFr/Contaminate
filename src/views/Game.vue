@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="12" md="6"><Gold :game="game" /> </v-col>
+      <v-col cols="12" md="6"><Gold /> </v-col>
       <v-col cols="12" md="6"><Store /></v-col>
     </v-row>
     <v-snackbar
@@ -30,18 +30,16 @@ export default {
   },
   data() {
     return {
-      game: "",
       showUpdate: false,
       updateGameMessage: "",
     };
   },
   methods: {
-    gameInfos() {
+    getGame() {
       axios
         .post("/games")
         .then((response) => {
-          this.game = response.data.game;
-          this.$store.commit("game", response.data.game._id);
+          this.$store.commit("getGame", response.data.game);
         })
         .catch((error) => {
           console.log(error.response.data);
@@ -50,15 +48,15 @@ export default {
   },
   created() {
     bus.$on("updateGame", (data) => {
-      this.showUpdate = true;
       this.updateGameMessage = data;
+      this.showUpdate = true;
       setTimeout(() => {
         this.showUpdate = false;
       }, 5000);
     });
   },
   mounted() {
-    this.gameInfos();
+    this.getGame();
   },
 };
 </script>

@@ -5,6 +5,7 @@
         <v-card-title class="justify-center headline">Boutique</v-card-title>
         <v-card-text>
           <ListBonus />
+          <ListUpgrade />
         </v-card-text>
       </v-card>
     </v-row>
@@ -13,10 +14,12 @@
 
 <script>
 import ListBonus from "@/components/ListBonus.vue";
+import ListUpgrade from "@/components/ListUpgrade.vue";
 export default {
   name: "Store",
   components: {
     ListBonus,
+    ListUpgrade,
   },
 };
 </script>

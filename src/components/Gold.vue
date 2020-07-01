@@ -9,7 +9,7 @@
         <v-card-subtitle class="text-center">
           <span class="ml-2 gold-second">(0 or/s.)</span>
         </v-card-subtitle>
-        <v-card-title class="justify-center green-number">
+        <!-- <v-card-title class="justify-center green-number">
           {{ formatedTwitchPts }}
           <v-img
             src="../../public/icon.png"
@@ -19,7 +19,7 @@
         </v-card-title>
         <v-card-subtitle class="text-center">
           <span class="ml-2 ">(Prochainement...)</span>
-        </v-card-subtitle>
+        </v-card-subtitle> -->
 
         <v-card-actions>
           <v-img
@@ -37,23 +37,19 @@
 <script>
 import { bus } from "../main";
 export default {
-  props: {
-    game: {
-      require: true,
-    },
-  },
   methods: {
     addingGold() {
-      this.game.golds++;
-      bus.$emit("addingGold", this.game.golds);
+      this.$store.state.game.golds++;
+      this.$store.commit("updateGameGolds", this.$store.state.game.golds);
     },
     updateGame() {
       let parameters = {
-        golds: this.game.golds,
-        twitchPts: this.game.twitchPts,
+        golds: this.$store.state.game.golds,
+        // twitchPts: this.game.twitchPts,
+        // production: this.game.production,
       };
       axios
-        .patch("/games/" + this.game._id, parameters)
+        .patch("/games/" + this.$store.state.game._id, parameters)
         .then((response) => {
           bus.$emit("updateGame", response.data.message);
         })
@@ -64,17 +60,16 @@ export default {
   },
   computed: {
     formatedGold: function() {
-      return new Intl.NumberFormat().format(this.game.golds);
+      return new Intl.NumberFormat().format(this.$store.state.game.golds);
     },
-    formatedTwitchPts: function() {
-      return new Intl.NumberFormat().format(this.game.twitchPts);
-    },
+    // formatedTwitchPts: function() {
+    //   return new Intl.NumberFormat().format(this.game.twitchPts);
+    // },
   },
   mounted() {
-    bus.$emit("addingGold", this.game.golds);
     setInterval(() => {
       this.updateGame();
-    }, 300000);
+    }, 60000);
   },
 };
 </script>

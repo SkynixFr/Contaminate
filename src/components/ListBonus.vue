@@ -17,7 +17,7 @@ export default {
     };
   },
   methods: {
-    getAllBonus() {
+    getBonus() {
       axios
         .get("/bonus/default")
         .then((response) => {
@@ -32,7 +32,7 @@ export default {
     },
   },
   mounted() {
-    this.getAllBonus();
+    this.getBonus();
   },
 };
 </script>

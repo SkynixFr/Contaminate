@@ -13,20 +13,21 @@ export default new Vuex.Store({
   plugins: [vp.plugin],
   state: {
     authToken: "",
-    userId: "",
-    gameId: "",
+    game: "",
   },
   mutations: {
     login(state, data) {
       state.authToken = data.token;
-      state.userId = data.user;
     },
     logout(state) {
       state.authToken = "";
-      state.userId = "";
+      state.game = "";
     },
-    game(state, data) {
-      state.gameId = data;
+    getGame(state, data) {
+      state.game = data;
+    },
+    updateGameGolds(state, data) {
+      state.game.golds = data;
     },
   },
   actions: {},
