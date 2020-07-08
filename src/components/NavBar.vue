@@ -178,17 +178,21 @@ export default {
     },
   },
   mounted() {
-    axios
-      .get("/users/" + this.$store.state.game.user)
-      .then((response) => {
-        this.username = response.data.user.username;
-      })
-      .catch((error) => {
-        console.log(error.response.data);
+    try {
+      axios
+        .get("/users/" + this.$store.state.game.user)
+        .then((response) => {
+          this.username = response.data.user.username;
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+      axios.get("/bonus/" + this.$store.state.game._id).then((response) => {
+        this.listBonusBought = response.data.bonus;
       });
-    axios.get("/bonus/" + this.$store.state.game._id).then((response) => {
-      this.listBonusBought = response.data.bonus;
-    });
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>

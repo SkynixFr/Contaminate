@@ -14,6 +14,9 @@ export default new Vuex.Store({
   state: {
     authToken: "",
     game: "",
+    upgrades: [],
+    bonus: [],
+    loader: true,
   },
   mutations: {
     login(state, data) {
@@ -22,12 +25,36 @@ export default new Vuex.Store({
     logout(state) {
       state.authToken = "";
       state.game = "";
+      state.loader = true;
+      state.upgrades = [];
     },
     getGame(state, data) {
       state.game = data;
     },
+    getUpgrade(state, data) {
+      state.upgrades.push(data);
+    },
     updateGameGolds(state, data) {
       state.game.golds = data;
+    },
+    updateLoader(state, data) {
+      state.loader = data;
+    },
+    updateUpgrade(state, data) {
+      state.upgrades.forEach((upgrade) => {
+        if (data._id === upgrade._id) {
+          state.game.production =
+            state.game.production + Math.round(upgrade.production * 100) / 100;
+          upgrade.level++;
+          upgrade.production =
+            upgrade.production +
+            Math.round(((upgrade.scaling * upgrade.production) / 100) * 100) /
+              100;
+          upgrade.price = Math.round(
+            upgrade.price + (upgrade.scaling * upgrade.price) / 100
+          );
+        }
+      });
     },
   },
   actions: {},

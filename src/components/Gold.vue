@@ -1,13 +1,15 @@
 <template>
   <v-container fluid dark>
     <v-row justify="center" align="center">
-      <v-card outlined dark color="rgba(0,0,0,0)">
+      <v-card outlined dark color="rgba(0,0,0,0.7)">
         <v-card-title class="justify-center gold-number">
           {{ formatedGold }}
           <v-icon class="ml-2" color="#ffd700">mdi-gold</v-icon>
         </v-card-title>
         <v-card-subtitle class="text-center">
-          <span class="ml-2 gold-second">(0 or/s.)</span>
+          <span class="ml-2 gold-second">
+            ({{ this.$store.state.game.production }} or/s.)
+          </span>
         </v-card-subtitle>
         <!-- <v-card-title class="justify-center green-number">
           {{ formatedTwitchPts }}
@@ -20,12 +22,13 @@
         <v-card-subtitle class="text-center">
           <span class="ml-2 ">(Prochainement...)</span>
         </v-card-subtitle> -->
-
-        <v-card-actions>
+        <v-card-actions class="justify-center">
           <v-img
-            src="../../public/twitch.png"
+            src="../../public/twitch_8bit.png"
             max-width="250"
             v-on:click="addingGold"
+            id="goldImg"
+            class="goldImg"
           >
           </v-img>
         </v-card-actions>
@@ -35,41 +38,44 @@
 </template>
 
 <script>
-import { bus } from "../main";
 export default {
   methods: {
     addingGold() {
       this.$store.state.game.golds++;
       this.$store.commit("updateGameGolds", this.$store.state.game.golds);
     },
-    updateGame() {
-      let parameters = {
-        golds: this.$store.state.game.golds,
-        // twitchPts: this.game.twitchPts,
-        // production: this.game.production,
-      };
-      axios
-        .patch("/games/" + this.$store.state.game._id, parameters)
-        .then((response) => {
-          bus.$emit("updateGame", response.data.message);
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-        });
+    productionGold() {
+      this.$store.state.game.golds += this.$store.state.game.production;
     },
   },
   computed: {
     formatedGold: function() {
-      return new Intl.NumberFormat().format(this.$store.state.game.golds);
+      return new Intl.NumberFormat().format(
+        Math.round(this.$store.state.game.golds * 10) / 10
+      );
     },
     // formatedTwitchPts: function() {
     //   return new Intl.NumberFormat().format(this.game.twitchPts);
     // },
   },
   mounted() {
-    setInterval(() => {
-      this.updateGame();
-    }, 60000);
+    if (this.$store.state.game.production > 0) {
+      setInterval(() => {
+        this.productionGold();
+      }, 1000);
+      setInterval(() => {
+        this.$store.commit(
+          "updateGameGolds",
+          Math.round(this.$store.state.game.golds * 10) / 10
+        );
+      }, 25000);
+    }
+    // let btn = document.getElementById("goldImg");
+    // btn.addEventListener("click", (e) => {
+    //   btn.classList.remove("pulsate");
+    //   void btn.offsetWidth;
+    //   btn.classList.add("pulsate");
+    // });
   },
 };
 </script>
@@ -88,5 +94,55 @@ export default {
 }
 .gold-second {
   color: #ffd700;
+}
+.goldImg {
+  cursor: pointer;
+  &:hover {
+    animation: pulsate 0.5s ease-in-out;
+  }
+}
+@-webkit-keyframes pulsate {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  25% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  75% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes pulsate {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  25% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  75% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-chip-group column :show-arrows="false">
-    <Bonus v-for="bonus in listBonus" :key="bonus._id" :bonus="bonus" />
+    <!-- <Bonus v-for="bonus in listBonus" :key="bonus._id" :bonus="bonus" /> -->
   </v-chip-group>
 </template>
 
