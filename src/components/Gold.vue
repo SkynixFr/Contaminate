@@ -1,7 +1,7 @@
 <template>
   <v-container fluid dark>
     <v-row justify="center" align="center">
-      <v-card outlined dark color="rgba(0,0,0,0.7)">
+      <v-card outlined dark color="rgba(0,0,0,0.7)" min-width="600">
         <v-card-title class="justify-center gold-number">
           {{ formatedGold }}
           <v-icon class="ml-2" color="#ffd700">mdi-gold</v-icon>
@@ -27,7 +27,6 @@
             src="../../public/twitch_8bit.png"
             max-width="250"
             v-on:click="addingGold"
-            id="goldImg"
             class="goldImg"
           >
           </v-img>
@@ -51,12 +50,9 @@ export default {
   computed: {
     formatedGold: function() {
       return new Intl.NumberFormat().format(
-        Math.round(this.$store.state.game.golds * 10) / 10
+        Math.round(this.$store.state.game.golds * 1000) / 1000
       );
     },
-    // formatedTwitchPts: function() {
-    //   return new Intl.NumberFormat().format(this.game.twitchPts);
-    // },
   },
   mounted() {
     if (this.$store.state.game.production > 0) {
@@ -66,16 +62,10 @@ export default {
       setInterval(() => {
         this.$store.commit(
           "updateGameGolds",
-          Math.round(this.$store.state.game.golds * 10) / 10
+          Math.round(this.$store.state.game.golds * 1000) / 1000
         );
       }, 25000);
     }
-    // let btn = document.getElementById("goldImg");
-    // btn.addEventListener("click", (e) => {
-    //   btn.classList.remove("pulsate");
-    //   void btn.offsetWidth;
-    //   btn.classList.add("pulsate");
-    // });
   },
 };
 </script>

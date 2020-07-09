@@ -43,12 +43,6 @@ export default {
   methods: {
     buyUpgrade() {
       if (this.$store.state.game.golds >= this.upgrade.price) {
-        this.$store.commit(
-          "updateGameGolds",
-          Math.round(
-            (this.$store.state.game.golds - this.upgrade.price) * 100
-          ) / 100
-        );
         this.$store.commit("updateUpgrade", this.upgrade);
       }
     },

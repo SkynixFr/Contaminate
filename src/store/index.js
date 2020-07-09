@@ -43,15 +43,20 @@ export default new Vuex.Store({
     updateUpgrade(state, data) {
       state.upgrades.forEach((upgrade) => {
         if (data._id === upgrade._id) {
-          state.game.production =
-            state.game.production + Math.round(upgrade.production * 100) / 100;
+          state.game.golds = Number(
+            (state.game.golds - upgrade.price).toFixed(3)
+          );
           upgrade.level++;
-          upgrade.production =
-            upgrade.production +
-            Math.round(((upgrade.scaling * upgrade.production) / 100) * 100) /
-              100;
-          upgrade.price = Math.round(
-            upgrade.price + (upgrade.scaling * upgrade.price) / 100
+          upgrade.price =
+            upgrade.price + Math.round((upgrade.scaling * upgrade.price) / 100);
+          upgrade.production = Number(
+            (
+              upgrade.production +
+              (upgrade.scaling * upgrade.production) / 100
+            ).toFixed(3)
+          );
+          state.game.production = Number(
+            (state.game.production + upgrade.production).toFixed(3)
           );
         }
       });
