@@ -97,12 +97,10 @@ export default {
       try {
         await this.getDefaultUpgrade();
         await this.getModifiedUpgrade();
-        this.listDefaultUpgrades.forEach((defaultUpgrade) => {
-          if (this.listModifiedUpgrades.length === 0) {
-            this.$store.commit("getUpgrade", defaultUpgrade);
-          } else {
-            this.listModifiedUpgrades.forEach((modifiedUpgrade) => {
-              if (defaultUpgrade._id === modifiedUpgrade.upgrade) {
+        if (this.listModifiedUpgrades.length > 0) {
+          this.listModifiedUpgrades.forEach((modifiedUpgrade) => {
+            this.listDefaultUpgrades.forEach((defaultUpgrade) => {
+              if (modifiedUpgrade.upgrade === defaultUpgrade._id) {
                 const upgrade = {
                   level: modifiedUpgrade.level,
                   _id: defaultUpgrade._id,
@@ -113,10 +111,16 @@ export default {
                   __v: defaultUpgrade.__v,
                 };
                 this.$store.commit("getUpgrade", upgrade);
+              } else {
+                this.$store.commit("getUpgrade", defaultUpgrade);
               }
             });
-          }
-        });
+          });
+        } else {
+          this.listDefaultUpgrades.forEach((defaultUpgrade) => {
+            this.$store.commit("getUpgrade", defaultUpgrade);
+          });
+        }
       } catch (error) {
         console.log(error);
       }
