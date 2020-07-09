@@ -1,5 +1,5 @@
 <template>
-  <v-list-item v-show="canBuySoon" :disabled="canBuyNow" @click="buyUpgrade">
+  <v-list-item v-show="canBuySoon" :disabled="canBuy" @click="buyUpgrade">
     <!-- <v-list-item-icon>
       <v-icon v-text="item.icon"></v-icon>
     </v-list-item-icon> -->
@@ -28,8 +28,7 @@ export default {
   data() {
     return {
       canBuySoon: false,
-      canBuyNow: true,
-      haventEnoughMoney: false,
+      canBuy: true,
     };
   },
   computed: {
@@ -49,27 +48,49 @@ export default {
   },
   watch: {
     getGoldsGame(newGolds, oldGolds) {
-      if (
-        this.upgrade.level >= 1 ||
-        this.$store.state.game.golds >=
-          this.upgrade.price - this.upgrade.price / 4
-      ) {
+      if (this.upgrade.level > 0) {
         this.canBuySoon = true;
         if (this.$store.state.game.golds >= this.upgrade.price) {
-          this.canBuyNow = false;
+          this.canBuy = false;
+        } else {
+          this.canBuy = true;
+        }
+      }
+      if (this.upgrade.level == 0) {
+        this.canBuySoon = false;
+        if (
+          this.$store.state.game.golds >=
+          this.upgrade.price - this.upgrade.price / 4
+        ) {
+          this.canBuySoon = true;
+          this.canBuy = true;
+        }
+        if (this.$store.state.game.golds >= this.upgrade.price) {
+          this.canBuy = false;
         }
       }
     },
   },
   mounted() {
-    if (
-      this.upgrade.level >= 1 ||
-      this.$store.state.game.golds >=
-        this.upgrade.price - this.upgrade.price / 4
-    ) {
+    if (this.upgrade.level > 0) {
       this.canBuySoon = true;
       if (this.$store.state.game.golds >= this.upgrade.price) {
-        this.canBuyNow = false;
+        this.canBuy = false;
+      } else {
+        this.canBuy = true;
+      }
+    }
+    if (this.upgrade.level == 0) {
+      this.canBuySoon = false;
+      if (
+        this.$store.state.game.golds >=
+        this.upgrade.price - this.upgrade.price / 4
+      ) {
+        this.canBuySoon = true;
+        this.canBuy = true;
+      }
+      if (this.$store.state.game.golds >= this.upgrade.price) {
+        this.canBuy = false;
       }
     }
   },

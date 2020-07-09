@@ -64,7 +64,7 @@ export default {
           "updateGameGolds",
           Math.round(this.$store.state.game.golds * 1000) / 1000
         );
-      }, 25000);
+      }, 1000);
     }
   },
 };
