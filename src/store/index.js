@@ -28,6 +28,7 @@ export default new Vuex.Store({
       state.game = "";
       state.loader = true;
       state.upgrades = [];
+      state.user = "";
     },
     getGame(state, data) {
       state.game = data;

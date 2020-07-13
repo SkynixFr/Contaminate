@@ -41,9 +41,6 @@ var intervalMounted;
 var intervalWatch;
 import { bus } from "../main";
 export default {
-  beforeDestroy() {
-    clearInterval(intervalMounted);
-  },
   filters: {
     formatingGold: (value) => {
       return new Intl.NumberFormat().format(Number(value).toFixed(3));
@@ -85,19 +82,7 @@ export default {
         intervalMounted = setInterval(() => {
           this.productionGold();
         }, 1000);
-        intervalWatch = setInterval(() => {
-          this.$store.commit(
-            "updateGameGolds",
-            Number(this.$store.state.game.golds.toFixed(3))
-          );
-        }, 10000);
       }
-    });
-    if (this.$store.state.game.production > 0) {
-      clearInterval(intervalMounted);
-      intervalMounted = setInterval(() => {
-        this.productionGold();
-      }, 1000);
       clearInterval(intervalWatch);
       intervalWatch = setInterval(() => {
         this.$store.commit(
@@ -105,7 +90,24 @@ export default {
           Number(this.$store.state.game.golds.toFixed(3))
         );
       }, 10000);
+    });
+    if (this.$store.state.game.production > 0) {
+      clearInterval(intervalMounted);
+      intervalMounted = setInterval(() => {
+        this.productionGold();
+      }, 1000);
     }
+    clearInterval(intervalWatch);
+    intervalWatch = setInterval(() => {
+      this.$store.commit(
+        "updateGameGolds",
+        Number(this.$store.state.game.golds.toFixed(3))
+      );
+    }, 10000);
+  },
+  beforeDestroy() {
+    clearInterval(intervalMounted);
+    clearInterval(intervalWatch);
   },
 };
 </script>

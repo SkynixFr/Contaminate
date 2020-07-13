@@ -46,6 +46,9 @@ import { bus } from "../main";
 import Gold from "@/components/Gold.vue";
 import Store from "@/components/Store.vue";
 export default {
+  beforeDestroy() {
+    clearInterval(interval);
+  },
   name: "Game",
   components: {
     Gold,
@@ -99,34 +102,31 @@ export default {
       try {
         await this.getDefaultUpgrade();
         await this.getModifiedUpgrade();
-        console.log(this.listDefaultUpgrades);
-        console.log(this.listModifiedUpgrades);
         if (this.listModifiedUpgrades.length > 0) {
-          console.log("Here");
           this.listDefaultUpgrades.forEach((defaultUpgrade) => {
-            console.log("Default");
-            this.listModifiedUpgrades.forEach((modifiedUpgrade) => {
-              console.log("Modified");
-              if (defaultUpgrade._id === modifiedUpgrade.upgrade) {
-                const upgrade = {
-                  level: modifiedUpgrade.level,
-                  _id: defaultUpgrade._id,
-                  name: defaultUpgrade.name,
-                  price: modifiedUpgrade.price,
-                  production: modifiedUpgrade.production,
-                  scaling: defaultUpgrade.scaling,
-                  __v: defaultUpgrade.__v,
-                };
-                this.$store.commit("getUpgrade", upgrade);
-                console.log("True");
-              } else {
-                // this.$store.commit("getUpgrade", defaultUpgrade);
-                console.log("False");
-              }
-            });
+            const found = this.listModifiedUpgrades.find(
+              (modifiedUpgrade) =>
+                modifiedUpgrade.upgrade === defaultUpgrade._id
+            );
+            if (found) {
+              const upgrade = {
+                level: found.level,
+                _id: defaultUpgrade._id,
+                name: defaultUpgrade.name,
+                price: found.price,
+                production: found.production,
+                scaling: defaultUpgrade.scaling,
+                __v: defaultUpgrade.__v,
+              };
+              this.$store.commit("getUpgrade", upgrade);
+            } else {
+              this.$store.commit("getUpgrade", defaultUpgrade);
+            }
           });
         } else {
-          this.$store.commit("getUpgrade", listDefaultUpgrades);
+          this.listDefaultUpgrades.forEach((element) => {
+            this.$store.commit("getUpgrade", element);
+          });
         }
       } catch (error) {
         console.log(error);
@@ -199,6 +199,7 @@ export default {
           this.$store.commit("updateLoader", false);
         }, 1500);
         bus.$emit("loadingGame", true);
+        clearInterval(interval);
         interval = setInterval(() => {
           this.updateGame();
           this.updateUpgrades();
@@ -207,6 +208,7 @@ export default {
     }
   },
   mounted() {
+    clearInterval(interval);
     interval = setInterval(() => {
       this.updateGame();
       this.updateUpgrades();
