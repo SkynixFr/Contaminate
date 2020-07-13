@@ -1,7 +1,7 @@
 <template>
   <v-container fluid dark>
     <v-row justify="center" align="center">
-      <v-card outlined dark color="rgba(0,0,0,0.7)" min-width="600">
+      <v-card outlined dark color="rgba(0,0,0,0.7)">
         <v-card-title class="justify-center gold-number">
           {{ this.$store.state.game.golds | formatingGold }}
           <v-icon class="ml-2" color="#ffd700">mdi-gold</v-icon>

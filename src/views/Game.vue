@@ -41,6 +41,7 @@
 </template>
 
 <script>
+var interval;
 import { bus } from "../main";
 import Gold from "@/components/Gold.vue";
 import Store from "@/components/Store.vue";
@@ -198,19 +199,18 @@ export default {
           this.$store.commit("updateLoader", false);
         }, 1500);
         bus.$emit("loadingGame", true);
-        setInterval(() => {
+        interval = setInterval(() => {
           this.updateGame();
           this.updateUpgrades();
         }, 60000);
       });
     }
   },
-  beforeDestroy() {
-    bus.$on("interval", (data1) => {
-      if (data1) {
-        console.log("yes");
-      }
-    });
+  mounted() {
+    interval = setInterval(() => {
+      this.updateGame();
+      this.updateUpgrades();
+    }, 60000);
   },
 };
 </script>

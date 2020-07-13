@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row justify="center" align="center">
-      <v-card outlined dark color="rgba(0,0,0,0.7)" min-width="600">
+      <v-card outlined dark color="rgba(0,0,0,0.7)">
         <v-card-title class="justify-center text-h4">Boutique</v-card-title>
         <v-card-text>
           <p class="text-center text-h6">
