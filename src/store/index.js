@@ -14,6 +14,7 @@ export default new Vuex.Store({
   state: {
     authToken: "",
     game: "",
+    user: "",
     upgrades: [],
     bonus: [],
     loader: true,
@@ -33,6 +34,9 @@ export default new Vuex.Store({
     },
     getUpgrade(state, data) {
       state.upgrades.push(data);
+    },
+    getUser(state, data) {
+      state.user = data;
     },
     updateGameGolds(state, data) {
       state.game.golds = data;

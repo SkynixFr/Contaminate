@@ -65,6 +65,7 @@ export default {
           this.$store.commit("getGame", response.data.game);
         });
         await this.verifyUpgrade();
+        await this.getUser();
       } catch (error) {
         console.log(error.response.data);
       }
@@ -97,10 +98,15 @@ export default {
       try {
         await this.getDefaultUpgrade();
         await this.getModifiedUpgrade();
+        console.log(this.listDefaultUpgrades);
+        console.log(this.listModifiedUpgrades);
         if (this.listModifiedUpgrades.length > 0) {
-          this.listModifiedUpgrades.forEach((modifiedUpgrade) => {
-            this.listDefaultUpgrades.forEach((defaultUpgrade) => {
-              if (modifiedUpgrade.upgrade === defaultUpgrade._id) {
+          console.log("Here");
+          this.listDefaultUpgrades.forEach((defaultUpgrade) => {
+            console.log("Default");
+            this.listModifiedUpgrades.forEach((modifiedUpgrade) => {
+              console.log("Modified");
+              if (defaultUpgrade._id === modifiedUpgrade.upgrade) {
                 const upgrade = {
                   level: modifiedUpgrade.level,
                   _id: defaultUpgrade._id,
@@ -111,15 +117,15 @@ export default {
                   __v: defaultUpgrade.__v,
                 };
                 this.$store.commit("getUpgrade", upgrade);
-              } else {
-                this.$store.commit("getUpgrade", defaultUpgrade);
+                console.log("True");
               }
+              // } else {
+              //   this.$store.commit("getUpgrade", defaultUpgrade);
+              // }
             });
           });
         } else {
-          this.listDefaultUpgrades.forEach((defaultUpgrade) => {
-            this.$store.commit("getUpgrade", defaultUpgrade);
-          });
+          this.$store.commit("getUpgrade", listDefaultUpgrades);
         }
       } catch (error) {
         console.log(error);
@@ -131,7 +137,6 @@ export default {
         // twitchPts: this.game.twitchPts,
         production: this.$store.state.game.production,
       };
-      console.log(this.$store.state.game.production);
 
       try {
         await axios
@@ -172,6 +177,18 @@ export default {
           }
         }
       });
+    },
+    async getUser() {
+      await axios
+        .get("users/" + this.$store.state.game.user)
+        .then((response) => {
+          const user = {
+            _id: response.data.user._id,
+            username: response.data.user.username,
+            email: response.data.user.email,
+          };
+          this.$store.commit("getUser", user);
+        });
     },
   },
   created() {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="this.$store.state.loader == false">
     <v-app-bar app fixed color="rgba(0,0,0,0.8)" dark>
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
@@ -48,7 +48,7 @@
             v-on="on"
           >
             <router-link to="/profil" exact>
-              {{ username }}
+              {{ this.$store.state.user.username }}
             </router-link>
           </v-toolbar-title>
         </template>
@@ -176,23 +176,6 @@ export default {
       this.$store.commit("logout");
       this.$router.push("/login");
     },
-  },
-  mounted() {
-    try {
-      axios
-        .get("/users/" + this.$store.state.game.user)
-        .then((response) => {
-          this.username = response.data.user.username;
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-        });
-      axios.get("/bonus/" + this.$store.state.game._id).then((response) => {
-        this.listBonusBought = response.data.bonus;
-      });
-    } catch (error) {
-      console.log(error);
-    }
   },
 };
 </script>

@@ -41,31 +41,48 @@ export default {
   methods: {
     addingGold() {
       this.$store.state.game.golds++;
-      this.$store.commit("updateGameGolds", this.$store.state.game.golds);
+      this.$store.commit(
+        "updateGameGolds",
+        Number(this.$store.state.game.golds.toFixed(3))
+      );
     },
     productionGold() {
-      this.$store.state.game.golds += this.$store.state.game.production;
+      this.$store.state.game.golds = Number(
+        (
+          this.$store.state.game.golds + this.$store.state.game.production
+        ).toFixed(3)
+      );
+    },
+    getProduction: function() {
+      return this.$store.state.game.production;
     },
   },
   computed: {
     formatedGold: function() {
       return new Intl.NumberFormat().format(
-        Math.round(this.$store.state.game.golds * 1000) / 1000
+        Number(this.$store.state.game.golds)
       );
     },
   },
   mounted() {
     if (this.$store.state.game.production > 0) {
-      setInterval(() => {
+      var intervalMounted = setInterval(() => {
         this.productionGold();
       }, 1000);
-      setInterval(() => {
+    }
+  },
+  watch: {
+    getProduction(newProd, oldProd) {
+      var intervalWatch = setInterval(() => {
+        this.productionGold();
+      }, 1000);
+      var intervalWatch2 = setInterval(() => {
         this.$store.commit(
           "updateGameGolds",
-          Math.round(this.$store.state.game.golds * 1000) / 1000
+          Number(this.$store.state.game.golds.toFixed(3))
         );
-      }, 1000);
-    }
+      }, 10000);
+    },
   },
 };
 </script>

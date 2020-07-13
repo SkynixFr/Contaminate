@@ -10,10 +10,10 @@
                 Général
               </v-list-item-title>
               <v-list-item-subtitle class="pt-5">
-                Pseudo : {{ user.username }}
+                Pseudo : {{ this.$store.state.user.username }}
               </v-list-item-subtitle>
               <v-list-item-subtitle class=" pt-1">
-                Email : {{ user.email }}
+                Email : {{ this.$store.state.user.email }}
               </v-list-item-subtitle>
               <v-list-item-subtitle class=" pt-1">
                 <v-tooltip bottom>
@@ -80,17 +80,6 @@ export default {
       this.$store.commit("logout");
       this.$router.push("/login");
     },
-  },
-  mounted() {
-    axios
-      .get("/users/" + this.$store.state.userId, {
-        headers: {
-          "auth-token": this.$store.state.token,
-        },
-      })
-      .then((response) => {
-        this.user = response.data.user;
-      });
   },
 };
 </script>
