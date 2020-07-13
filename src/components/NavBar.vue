@@ -48,7 +48,7 @@
             v-on="on"
           >
             <router-link to="/profil" exact>
-              {{ this.$store.state.user.username }}
+              {{ username }}
             </router-link>
           </v-toolbar-title>
         </template>
@@ -156,6 +156,7 @@
 </template>
 
 <script>
+import { bus } from "../main";
 export default {
   name: "NavBar",
   data() {
@@ -176,6 +177,12 @@ export default {
       this.$store.commit("logout");
       this.$router.push("/login");
     },
+  },
+  mounted() {
+    bus.$on("loadingGame", (data) => {
+      this.username = this.$store.state.user.username;
+    });
+    this.username = this.$store.state.user.username;
   },
 };
 </script>

@@ -3,12 +3,12 @@
     <v-row justify="center" align="center">
       <v-card outlined dark color="rgba(0,0,0,0.7)" min-width="600">
         <v-card-title class="justify-center gold-number">
-          {{ formatedGold }}
+          {{ this.$store.state.game.golds | formatingGold }}
           <v-icon class="ml-2" color="#ffd700">mdi-gold</v-icon>
         </v-card-title>
         <v-card-subtitle class="text-center">
           <span class="ml-2 gold-second">
-            ({{ this.$store.state.game.production }} or/s.)
+            ({{ this.$store.state.game.production | formatingGold }} or/s.)
           </span>
         </v-card-subtitle>
         <!-- <v-card-title class="justify-center green-number">
@@ -37,7 +37,18 @@
 </template>
 
 <script>
+var intervalMounted;
+var intervalWatch;
+import { bus } from "../main";
 export default {
+  beforeDestroy() {
+    clearInterval(intervalMounted);
+  },
+  filters: {
+    formatingGold: (value) => {
+      return new Intl.NumberFormat().format(Number(value).toFixed(3));
+    },
+  },
   methods: {
     addingGold() {
       this.$store.state.game.golds++;
@@ -53,36 +64,48 @@ export default {
         ).toFixed(3)
       );
     },
+  },
+  computed: {
     getProduction: function() {
       return this.$store.state.game.production;
     },
   },
-  computed: {
-    formatedGold: function() {
-      return new Intl.NumberFormat().format(
-        Number(this.$store.state.game.golds)
-      );
+  watch: {
+    getProduction() {
+      clearInterval(intervalMounted);
+      intervalMounted = setInterval(() => {
+        this.productionGold();
+      }, 1000);
     },
   },
   mounted() {
+    bus.$on("loadingGame", (data) => {
+      if (this.$store.state.game.production > 0) {
+        clearInterval(intervalMounted);
+        intervalMounted = setInterval(() => {
+          this.productionGold();
+        }, 1000);
+        intervalWatch = setInterval(() => {
+          this.$store.commit(
+            "updateGameGolds",
+            Number(this.$store.state.game.golds.toFixed(3))
+          );
+        }, 10000);
+      }
+    });
     if (this.$store.state.game.production > 0) {
-      var intervalMounted = setInterval(() => {
+      clearInterval(intervalMounted);
+      intervalMounted = setInterval(() => {
         this.productionGold();
       }, 1000);
-    }
-  },
-  watch: {
-    getProduction(newProd, oldProd) {
-      var intervalWatch = setInterval(() => {
-        this.productionGold();
-      }, 1000);
-      var intervalWatch2 = setInterval(() => {
+      clearInterval(intervalWatch);
+      intervalWatch = setInterval(() => {
         this.$store.commit(
           "updateGameGolds",
           Number(this.$store.state.game.golds.toFixed(3))
         );
       }, 10000);
-    },
+    }
   },
 };
 </script>

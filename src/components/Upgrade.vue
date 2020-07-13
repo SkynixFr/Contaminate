@@ -6,7 +6,7 @@
     <v-list-item-content>
       <v-list-item-title class="name">{{ upgrade.name }}</v-list-item-title>
       <v-list-item-subtitle>
-        {{ formatedPrice }}
+        {{ upgrade.price | formatingPrice }}
         <v-icon color="#ffd700" :size="15">mdi-gold</v-icon>
       </v-list-item-subtitle>
     </v-list-item-content>
@@ -25,6 +25,11 @@ export default {
       require: true,
     },
   },
+  filters: {
+    formatingPrice: (value) => {
+      return new Intl.NumberFormat().format(value);
+    },
+  },
   data() {
     return {
       canBuySoon: false,
@@ -32,9 +37,6 @@ export default {
     };
   },
   computed: {
-    formatedPrice: function() {
-      return new Intl.NumberFormat().format(this.upgrade.price);
-    },
     getGoldsGame: function() {
       return this.$store.state.game.golds;
     },
@@ -47,7 +49,7 @@ export default {
     },
   },
   watch: {
-    getGoldsGame(newGolds, oldGolds) {
+    getGoldsGame() {
       if (this.upgrade.level > 0) {
         this.canBuySoon = true;
         if (this.$store.state.game.golds >= this.upgrade.price) {
