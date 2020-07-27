@@ -1,19 +1,17 @@
-# contaminate
+# Contaminate
 
-## Project setup
-```
+Contaminate est un clicker basé sur le personnage Twitch dans League of legends. Le but est donc d'accumuler de l'argent et d'acheter des améliorations dans la boutique.
+
+## Build setup
+
+```PHP
+# install dependencies
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
+# serve with hot reload
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Link
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Pour découvrir l'application en direct : [Contaminate](https://contaminate.netlify.app/).
