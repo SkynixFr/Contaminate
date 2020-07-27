@@ -5,7 +5,7 @@ Contaminate est un clicker basé sur le personnage Twitch dans League of legends
 ## Build setup
 
 ```PHP
-# install depedencies
+# install dependencies
 npm install
 
 # serve with hot reload
