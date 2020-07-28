@@ -15,4 +15,5 @@ npm run serve
 ## Link
 
 Pour découvrir l'application en direct : [Contaminate](https://contaminate.netlify.app/).
+
 Lien d'une vidéo de présentation : [Vidéo](https://youtu.be/a5Lk8kP_3_s).
